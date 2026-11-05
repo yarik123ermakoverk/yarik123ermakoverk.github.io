@@ -1,6 +1,34 @@
-#profile-title: 🏳️ Florezok VPN
-#subscription-userinfo: upload=0; download=0; total=0; expire=1800000000
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscription</title>
+</head>
+<body>
+<pre id="content">Генерация подписки...</pre>
 
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.192:8080#🇳🇱 Сервер 1
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.210:8080#🇳🇱 Сервер 2
-vless://7dd69047-047e-422e-a2ba-ed773c34fd1a@37.18.14.43:2053?encryption=none&security=tls&type=xhttp&sni=flatcrest.net&path=/api/v1/upload#🇷🇺 Россия | CDN
+<script>
+    // Получаем ID пользователя из адресной строки (?user=...)
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user') || 'guest_' + Math.random().toString(36).substring(2, 7);
+
+    // Считаем время: текущий момент в секундах (Unix timestamp) + 60 секунд (1 минута)
+    const expireTime = Math.floor(Date.now() / 1000) + 60;
+
+    // Генерируем персональный конфиг с таймером и уникальным ID в названиях серверов
+    const subContent = 
+`#profile-title: 🏳️ Florezok VPN [${userId}]
+#subscription-userinfo: upload=0; download=0; total=1073741824; expire=${expireTime}
+
+ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.192:8080#🇳🇱 Сервер 1 [${userId}]
+ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.210:8080#🇳🇱 Сервер 2 [${userId}]
+vless://7dd69047-047e-422e-a2ba-ed773c34fd1a@37.18.14.43:2053?encryption=none&security=tls&type=xhttp&sni=flatcrest.net&path=/api/v1/upload#🇷🇺 Россия | CDN [${userId}]`;
+
+    // Выводим чистым текстом, чтобы Happ сожрал без ошибок
+    document.getElementById('content').textContent = subContent;
+    document.open();
+    document.write(subContent);
+    document.close();
+</script>
+</body>
+</html>
