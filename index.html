@@ -16,6 +16,7 @@
         .link-box { display: flex; gap: 8px; margin-bottom: 10px; }
         .link-input { flex: 1; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 12px; padding: 10px 12px; color: #a78bfa; font-size: 11px; outline: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .copy-btn { background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); color: white; border: none; padding: 0 16px; border-radius: 12px; font-weight: 700; font-size: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+        .timer { font-size: 12px; color: #ec4899; font-weight: 700; margin-top: 8px; }
         .instructions { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 14px; font-size: 12px; color: #d1d5db; line-height: 1.5; }
         .instructions ol { padding-left: 18px; margin-top: 6px; }
         .instructions li { margin-bottom: 4px; }
@@ -29,13 +30,14 @@
         <div class="logo">FlorezokVPN</div>
 
         <div class="card">
-            <h2>Ваша ссылка-подписка</h2>
-            <p>Скопируйте и добавьте в Happ:</p>
+            <h2>Персональная подписка</h2>
+            <p>Ссылка создана специально для вас:</p>
             
             <div class="link-box">
                 <input type="text" id="subLinkInput" class="link-input" readonly>
                 <button class="copy-btn" onclick="copySubscription()">Копировать</button>
             </div>
+            <div class="timer">⏳ Время жизни: ровно 1 минута</div>
         </div>
 
         <div class="instructions">
@@ -43,7 +45,7 @@
             <ol>
                 <li>Нажмите кнопку <strong>«Копировать»</strong>.</li>
                 <li>Откройте приложение <strong>Happ</strong>.</li>
-                <li>Вставьте скопированную ссылку как подписку.</li>
+                <li>Вставьте подписку.</li>
             </ol>
         </div>
     </div>
@@ -52,14 +54,14 @@
 
     <script>
         window.onload = function() {
-            // Генерируем уникальный ID для каждого человека и сохраняем его
+            // Генерируем уникальный ID для каждого нового юзера
             let userId = localStorage.getItem('florezok_uid');
             if (!userId) {
                 userId = 'u_' + Math.random().toString(36).substring(2, 9);
                 localStorage.setItem('florezok_uid', userId);
             }
 
-            // Создаем красивую персональную ссылку с его ID в параметрах
+            // Формируем уникальную ссылку на sub.html с персональным ID
             const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
             const personalLink = baseUrl + 'sub.html?user=' + userId;
             
