@@ -54,16 +54,15 @@
 
     <script>
         window.onload = function() {
-            // Генерируем уникальный ID для каждого нового юзера
             let userId = localStorage.getItem('florezok_uid');
             if (!userId) {
                 userId = 'u_' + Math.random().toString(36).substring(2, 9);
                 localStorage.setItem('florezok_uid', userId);
             }
 
-            // Формируем уникальную ссылку на sub.html с персональным ID
+            // Добавляем уникальный параметр времени (Date.now()), чтобы Happ не кешировал старую ссылку
             const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-            const personalLink = baseUrl + 'sub.html?user=' + userId;
+            const personalLink = baseUrl + 'sub.html?user=' + userId + '&t=' + Date.now();
             
             document.getElementById('subLinkInput').value = personalLink;
         };
