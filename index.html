@@ -31,7 +31,7 @@
 
         <div class="card">
             <h2>Персональная подписка</h2>
-            <p>Ссылка создана специально для вас:</p>
+            <p>Создана индивидуально для вас:</p>
             
             <div class="link-box">
                 <input type="text" id="subLinkInput" class="link-input" readonly>
@@ -54,17 +54,29 @@
 
     <script>
         window.onload = function() {
+            // Создаем или берем уникальный ID пользователя
             let userId = localStorage.getItem('florezok_uid');
             if (!userId) {
                 userId = 'u_' + Math.random().toString(36).substring(2, 9);
                 localStorage.setItem('florezok_uid', userId);
             }
 
-            // Добавляем уникальный параметр времени (Date.now()), чтобы Happ не кешировал старую ссылку
-            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-            const personalLink = baseUrl + 'sub.html?user=' + userId + '&t=' + Date.now();
-            
-            document.getElementById('subLinkInput').value = personalLink;
+            // Вычисляем время сгорания: ровно через 60 секунд от текущего момента
+            const expireTime = Math.floor(Date.now() / 1000) + 60;
+
+            // Собираем текст подписки
+            let subContent = "";
+            subContent += "#profile-title: 🏳️ Florezok VPN [" + userId + "]\n";
+            subContent += "#subscription-userinfo: upload=0; download=0; total=1073741824; expire=" + expireTime + "\n\n";
+            subContent += "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.192:8080#🇳🇱 Сервер 1 [" + userId + "]\n";
+            subContent += "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.210:8080#🇳🇱 Сервер 2 [" + userId + "]\n";
+            subContent += "vless://7dd69047-047e-422e-a2ba-ed773c34fd1a@37.18.14.43:2053?encryption=none&security=tls&type=xhttp&sni=flatcrest.net&path=/api/v1/upload#🇷🇺 Россия | CDN [" + userId + "]";
+
+            // Кодируем конфиг в Base64 и упаковываем в data-ссылку, которую Happ принимает на ура
+            const base64Config = btoa(unescape(encodeURIComponent(subContent)));
+            const dataUriLink = "data:text/plain;charset=utf-8;base64," + base64Config;
+
+            document.getElementById('subLinkInput').value = dataUriLink;
         };
 
         function copySubscription() {
