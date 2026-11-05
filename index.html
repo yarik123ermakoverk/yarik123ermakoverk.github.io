@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FlorezokVPN — Ваша подписка</title>
+    <title>FlorezokVPN — Персональная подписка</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -29,9 +29,9 @@
         <div class="logo">FlorezokVPN</div>
 
         <div class="card">
-            <h2>Персональная подписка</h2>
-            <p>Ссылка на файл подписки:</p>
-
+            <h2>Ваша ссылка-подписка</h2>
+            <p>Скопируйте и добавьте в Happ:</p>
+            
             <div class="link-box">
                 <input type="text" id="subLinkInput" class="link-input" readonly>
                 <button class="copy-btn" onclick="copySubscription()">Копировать</button>
@@ -52,9 +52,18 @@
 
     <script>
         window.onload = function() {
-            // Автоматически подставляем ссылку на твой raw-файл sub.txt в репозитории
+            // Генерируем уникальный ID для каждого человека и сохраняем его
+            let userId = localStorage.getItem('florezok_uid');
+            if (!userId) {
+                userId = 'u_' + Math.random().toString(36).substring(2, 9);
+                localStorage.setItem('florezok_uid', userId);
+            }
+
+            // Создаем красивую персональную ссылку с его ID в параметрах
             const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-            document.getElementById('subLinkInput').value = baseUrl + 'sub.txt';
+            const personalLink = baseUrl + 'sub.html?user=' + userId;
+            
+            document.getElementById('subLinkInput').value = personalLink;
         };
 
         function copySubscription() {
