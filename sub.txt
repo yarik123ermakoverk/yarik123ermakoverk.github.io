@@ -1,4 +1,6 @@
 #profile-title: 🏳️ Florezok VPN
+#subscription-userinfo: upload=0; download=0; total=1073741824; expire=1783450000
+
 ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.192:8080#🇳🇱 Сервер 1
 ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTprMWRCT21PQjRvcWk3VW1wMzdhMWJR@82.38.31.210:8080#🇳🇱 Сервер 2
 vless://7dd69047-047e-422e-a2ba-ed773c34fd1a@37.18.14.43:2053?encryption=none&security=tls&type=xhttp&sni=flatcrest.net&path=/api/v1/upload#🇷🇺 Россия | CDN
